@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt")
 
 module.exports = class userController {
  
+    
     // metodo de registro de usuario
     static async registerUser(req, res){
    
@@ -42,9 +43,8 @@ module.exports = class userController {
 
         res.status(200).json({token})
 
-
     }
-     // metodo de login
+    // metodo de login
    static async loginUser(req, res){
     
         const { email, password } = req.body;
@@ -113,6 +113,8 @@ module.exports = class userController {
 
    }
 
- }
+
+
+}
 
 
