@@ -9,32 +9,35 @@ module.exports = class userController {
     // metodo de registro de usuario
     static async registerUser(req, res){
    
-        const { email, password } = req.body;
-
+        const { name, cpf, phone, email, password } = req.body;
         //validação de campos 
+        if(!name || name == null || name == ''){
+            return res.status(422).json({message: 'empty nome field'})
+        }
+        if(!cpf || cpf == null || cpf == ''){
+            return res.status(422).json({message: 'empty cpf field'})
+        }
+         if(!phone || phone == null || phone == ''){
+            return res.status(422).json({message: 'empty telefone field'})
+        }
         if(!email || email == null || email == ''){
             return res.status(422).json({message: 'empty email field'})
-        }
-
+        } 
         if(!password || password == null || password == ''){
             return res.status(422).json({message: 'empty password field'})
         }
+  
 
         // impossibilitando duplicação de usuario no banco de dados
-
          const emailExists = await User.findOne({email: email})
          if(emailExists){
             return res.status(422).json({message: 'existing email'})
          }
-
         //metodo para encriptação de senha
-
         const salt = await bcrypt.genSalt(12)
         const passwordHash = await bcrypt.hash(password, salt)
-
-
         // criando um novo usuario e token
-        const user = User({email, password: passwordHash});
+        const user = User({name, cpf, phone, email, password: passwordHash});
 
         await user.save();
 

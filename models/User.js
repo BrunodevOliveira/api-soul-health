@@ -2,7 +2,7 @@
 const { model, Schema } = require("mongoose");
 
 const UserSchema = new Schema({
-   nome: {
+   name: {
     type: String,
     required: true,
   },
@@ -11,7 +11,7 @@ const UserSchema = new Schema({
     required: true,
   },
   
-  telefone: {
+  phone: {
     type: Number,
     required: true,
   },
