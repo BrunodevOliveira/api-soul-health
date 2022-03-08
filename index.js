@@ -13,7 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors())
 
-const routes = require("./routes/userRoutes");
-app.use('/user', routes)
+const routes = require("./routes");
+app.use('/user',routes)
+app.use('/',routes)
 
 app.listen(process.env.PORT || 3000);
