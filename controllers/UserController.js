@@ -97,10 +97,10 @@ module.exports = class userController {
 
    }
      // metodo de edição de usuario
-   static async updateuser(req, res){
-
-    const { id, email, password  } = req.body;
-    await User.findByIdAndUpdate(id, { email, password })
+   static async updateuser(req, res) {
+    
+    const { id, name, cpf, phone, email, password } = req.body;
+    await User.findByIdAndUpdate(id, { name, cpf, phone, email, password })
 
     return res.status(200).json({message: 'user updated successfully'})
 
