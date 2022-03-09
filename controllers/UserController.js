@@ -131,16 +131,13 @@ module.exports = class userController {
     }
     // metodo para deletar o usuario
     static async deleteUser(req, res){
-
         const { id } = req.params;
-
         try {
             await User.findByIdAndDelete(id);
             return res.status(200).json({message: 'deleted user'})
           } catch (err) {
             res.status(404).json({ message: "User not found" });
           }
-
 
     }
 
