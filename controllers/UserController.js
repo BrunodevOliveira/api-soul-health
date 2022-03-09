@@ -106,7 +106,12 @@ module.exports = class userController {
     static async updateuser(req, res) {
         
         const { id, name, cpf, phone, email, password } = req.body;
-        await User.findByIdAndUpdate(id, { name, cpf, phone, email, password })
+
+            //metodo para encriptação de senha
+            const salt = await bcrypt.genSalt(12)
+            const passwordHash = await bcrypt.hash(password, salt)
+
+            await User.findByIdAndUpdate(id, { name, cpf, phone, email, password: passwordHash })
 
         return res.status(200).json({message: 'user updated successfully'})
 
