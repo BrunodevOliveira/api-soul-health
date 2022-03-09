@@ -96,6 +96,12 @@ module.exports = class userController {
         return res.status(200).json(users)
 
     }
+    // trás um usuario especifico ( dono do id)
+    static async findOneUser(req, res){
+        const  id  = req.params.id
+        const user = await User.findOne({_id:id})
+        return res.status(200).json(user)
+    }
     // metodo de edição de usuario
     static async updateuser(req, res) {
         
@@ -116,7 +122,7 @@ module.exports = class userController {
 
     }
 
-
+    
 
 }
 
