@@ -9,8 +9,8 @@ router.post('/signup', userController.registerUser)
 router.post('/signin', userController.loginUser)
 router.get('/show', userController.showUsers)
 router.get('/oneuser/:id', userController.findOneUser)
-router.post('/delete', userController.deleteUser)
-router.post('/update', userController.updateuser)
+router.post('/delete/:id', userController.deleteUser)
+router.post('/update/:id', userController.updateuser)
 
 
 module.exports = router;

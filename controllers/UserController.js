@@ -105,25 +105,39 @@ module.exports = class userController {
     // metodo de edição de usuario
     static async updateuser(req, res) {
         
-        const { id, name, cpf, phone, email, password } = req.body;
+        const {id} = req.params
 
-            //metodo para encriptação de senha
-            const salt = await bcrypt.genSalt(12)
-            const passwordHash = await bcrypt.hash(password, salt)
-
-            await User.findByIdAndUpdate(id, { name, cpf, phone, email, password: passwordHash })
+        const {name, cpf, phone, email, password } = req.body;
+        if(name && cpf && phone && email && password){
+            try{
+        //metodo para encriptação de senha
+        const salt = await bcrypt.genSalt(12)
+        const passwordHash = await bcrypt.hash(password, salt)
+        await User.findByIdAndUpdate(id, { name, cpf, phone, email, password:passwordHash })
 
         return res.status(200).json({message: 'user updated successfully'})
+        } catch(err){
+
+            res.status(404).json({ message: "User not found" });
+
+        }
+
+        }else {
+
+            res.status(400).json({ message: "Required fields" });
+
+        }
 
     }
     // metodo para deletar o usuario
     static async deleteUser(req, res){
-
-        const { id } = req.body;
-
-        await User.findByIdAndDelete(id);
-
-        return res.status(200).json({message: 'deleted user'})
+        const { id } = req.params;
+        try {
+            await User.findByIdAndDelete(id);
+            return res.status(200).json({message: 'deleted user'})
+          } catch (err) {
+            res.status(404).json({ message: "User not found" });
+          }
 
     }
 
