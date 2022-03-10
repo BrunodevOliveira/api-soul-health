@@ -9,7 +9,7 @@ router.post('/signup', userController.registerUser)
 router.post('/signin', userController.loginUser)
 router.get('/show', userController.showUsers)
 router.get('/oneuser/:id', userController.findOneUser)
-router.post('/delete/:id', userController.deleteUser)
+router.delete('/delete/:id', userController.deleteUser)
 router.post('/update/:id', userController.updateuser)
 
 
