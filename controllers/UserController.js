@@ -111,13 +111,11 @@ module.exports = class userController {
         
         const {id} = req.params
 
-        const {name, cpf, phone, email, password } = req.body;
-        if(name && cpf && phone && email && password){
+        const {name, cpf, phone, email } = req.body;
+        if(name && cpf && phone && email){
             try{
-        //metodo para encriptação de senha
-        const salt = await bcrypt.genSalt(12)
-        const passwordHash = await bcrypt.hash(password, salt)
-        await User.findByIdAndUpdate(id, { name, cpf, phone, email, password:passwordHash })
+        
+        await User.findByIdAndUpdate(id, { name, cpf, phone, email })
 
         return res.status(200).json({message: 'user updated successfully'})
         } catch(err){
