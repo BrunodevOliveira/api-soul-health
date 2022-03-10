@@ -76,7 +76,7 @@ module.exports = class userController {
 
             const secret = process.env.SECRET
             const token = jwt.sign({
-                id: user._id,
+                id: user._id, email: user.email,
             },
             secret,
             )
@@ -88,6 +88,7 @@ module.exports = class userController {
             res.status(400).json({message: `an error occurred on the server: ${err}` })
         }
 
+
     }
     // trás uma lista com todos os usuarios cadastrados
     static async showUsers(req, res){
@@ -98,9 +99,12 @@ module.exports = class userController {
     }
     // trás um usuario especifico ( dono do id)
     static async findOneUser(req, res){
+        
         const  id  = req.params.id
+
         const user = await User.findOne({_id:id})
         return res.status(200).json(user)
+       
     }
     // metodo de edição de usuario
     static async updateuser(req, res) {
