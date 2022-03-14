@@ -101,7 +101,9 @@ module.exports = class userController {
     static async findOneUser(req, res){
         
         const  id  = req.params.id
-
+        if(!id){
+            res.status(404).json({ message: "user not found" });
+        }
         const user = await User.findOne({_id:id})
         return res.status(200).json(user)
        

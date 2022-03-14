@@ -7,6 +7,10 @@ module.exports = class ConsultProgramController {
         
         const  email  = req.params.email
 
+        if(!email){
+            return res.status(400).json({message: 'user not found'}) 
+        }
+
         const user = await Program.find({email:email})
 
         return res.status(200).json(user)
@@ -20,9 +24,24 @@ module.exports = class ConsultProgramController {
 
         const { specialty, date } = req.body;
 
-        await Program.findByIdAndUpdate(id, {specialty, date})
+        if(specialty && date){
 
-        return res.status(200).json({message: 'consult updated successfully'})
+            try{
+
+                await Program.findByIdAndUpdate(id, {specialty, date})
+
+                return res.status(200).json({message: 'consult updated successfully'})
+        
+            }catch(err){
+                res.status(404).json({ message: "consult not found" });
+            } 
+        }else {
+
+            res.status(400).json({ message: "Required fields" });
+
+        }
+
+
 
     }
     // metodo para deletar consulta, usando como referencia o email
@@ -30,12 +49,19 @@ module.exports = class ConsultProgramController {
 
         const id = req.params.id
 
-        await Program.findByIdAndDelete(id)
+        try {
+            await Program.findByIdAndDelete(id)
 
-        return res.status(200).json({message: 'deleted consult'})
+            return res.status(200).json({message: 'deleted consult'})
+        } catch (err) {
+            
+            res.status(404).json({ message: "consult not found" });
+        }
 
-    }
+      }
+
+ }
 
 
 
-}
+
