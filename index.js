@@ -20,3 +20,15 @@ app.use('/', routes)
 app.use('/consult', routes)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 app.listen(process.env.PORT || 3000);
+
+// "examples":{
+//     "user":{
+//         "value":{
+//             "name": "Carlos Junior dos Santos",
+//             "cpf": "794.009.780-65",
+//             "phone":"(71) 98036-3347",
+//             "email": "carlosjuniordossantos@gmail.com",
+//             "password": "123445"
+//         }
+//     }
+// }
