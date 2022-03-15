@@ -8,6 +8,7 @@
     "basePath": "/",
     "paths":{
 
+        
 
         "/user/signup":{
             "post": {
@@ -229,6 +230,7 @@
         },
 
 
+
         "/showconsults/{email}":{
             "get": {
                 "summary": "Mostra consultas de usuario especifico",
@@ -330,7 +332,7 @@
                 }
             }
         }
-        
+
     },
     "components":{
 
