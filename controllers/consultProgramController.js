@@ -2,6 +2,7 @@ const Program = require('../models/Program')
 
 module.exports = class ConsultProgramController {
 
+
     // metodo para mostrar consultas de um determinado usuario, selecionado pelo email.
     static async  showConsults (req, res) {
         
@@ -44,6 +45,7 @@ module.exports = class ConsultProgramController {
 
 
     }
+
     // metodo para deletar consulta, usando como referencia o email
     static async deleteConsult(req, res){
 
@@ -58,9 +60,10 @@ module.exports = class ConsultProgramController {
             res.status(404).json({ message: "consult not found" });
         }
 
-      }
+    }
 
- }
+
+}
 
 
 
