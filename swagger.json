@@ -1,10 +1,382 @@
 {
     "openapi": "3.0.1",
     "info":{
-        "title":"apiDialogFlow",
-        "description": "",
+        "title":"ApiDialogFlow",
+        "description": "Documentação do CRUD de usuarios e do CRUD de consultas.",
         "version": "1.0.0"
     },
-    "basePath": "/"
+    "basePath": "/",
+    "paths":{
+
+
+
+        "/user/signup":{
+            "post": {
+                "summary": "Cadastrar usuarios",
+                "description": " Esta rota é responsavel por cadastrar  usuario, encriptografar a senha e salvar este usuario no banco de dados. Este processo é feito requisito os dados do body, essas dados passam por validações para checar se os campos estão ou não vazios, para checar se o email cadastrado (usado para login) já existe. caso passe por todas as validações a senha recebe um tratamento especial usando bcrypt para gerar um hash que ira proteger esta senha no banco de dados, depois disso o novo usuario é salvo no banco de dados.",
+                "tags": ["User"],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/User"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value":{
+                                        "name": "Carlos Emanual Pedroza",
+                                        "cpf": "927.709.440-02",
+                                        "phone": "(71) 98050-1063",
+                                        "email": "CarlosEmanualPedroza@gmail.com",
+                                        "password": "12345"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "empty  field"
+                    },
+                    "422": {
+                        "description": "existing email"
+                    },
+                    "200":{
+                       "description": "registered user"
+                    }
+                }
+            }
+        },
+
+        "/user/signin":{
+            "post": {
+                "summary": "Login de usuario",
+                "description": " Esta rota é responsavel por fazer o login, criar e retornar um token de autenticação do usuario.  o login é realizado por meio do email e da senha cadastrada no banco de dados, feita a vefiricação se os campos estão preenchidos, é feita a verificação para saber se a senha e o email conhecidem com os dados cadastrados no banco, caso a resposta seja positiva, é gerado um token do usuario.",
+                "tags": ["User"],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/User"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value":{
+                                        "email": "CarlosEmanualPedroza@gmail.com",
+                                        "password": "12345"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+ 
+                    "400": {
+                        "description": "an error occurred on the server"
+                    },
+                    "401": {
+                        "description": "invalid password"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "422": {
+                        "description": "empty password field"
+                    },
+                    "200":{
+                       "description": "successful authentication",    
+                       "application/json":{
+                        "schema":{
+                            "type":"object"
+                        }
+                    }
+                    }
+                }
+            }
+        },
+
+        "/user/show":{
+            "get": {
+                "summary": "Mostra usuarios",
+                "description": "Esta rota é responsavel por mostrar todos os usuarios cadastrados, nao é necessario passar nenhum parametro, apenas acessar este endpoint. Será  feito um find no  banco de dados buscando todos os usuarios e retorna um objeto listando esses usuarios.",
+                "tags": ["User"],
+                "requestBody": {
+                    "schema":{
+                        "type":"object"
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "no registered users"
+                    },
+                    "200":{
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/User"
+                            
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/oneuser/{id}":{
+            "get": {
+                "summary": "Mostra  usuario especifico",
+                "description": " Esta rota é responsavel por buscar e mostrar um usuario especifico, usando  o Id como filtro.",
+                "tags": ["User"],
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "schema":{
+                        "type": "string",
+                        "minimum": 1
+                    }
+                }],
+                "responses": {
+                    "404": {
+                        "description": "user not found"
+                    },
+                    "200":{
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/update/{id}":{
+            "post": {
+                "summary": "Edição de Usuario",
+                "description": " Esta rota é responsavel por editar as informações do usuario, selecionando o usuario a ser editado por ID e passando os campos que terão as informações atualizadas e salvas no banco de dados",
+                "tags": ["User"],
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "schema":{
+                        "type": "string",
+                        "minimum": 1
+                    }
+                }],     "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/User"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value":{
+                                        "name": "Carlos Emanual Pedroza",
+                                        "cpf": "927.709.440-02",
+                                        "phone": "(71) 98050-1063",
+                                        "email": "CarlosEmanualPedroza@gmail.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Required fields"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "200":{
+                        "description": "user updated successfully"
+                    }
+                }
+            }
+        },
+
+        "/delete/{id}":{
+            "delete": {
+                "summary": "Deletar  Usuario",
+                "description": " Esta rota é responsavel excluir o usuario do banco de dados, utilizando o Id vindo por params para deletar o usuario correspondente",
+                "tags": ["User"],
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "schema":{
+                        "type": "string",
+                        "minimum": 1
+                    }
+                }],
+                "responses": {
+                    "404": {
+                        "description": "user not found"
+                    },
+                    "200":{
+                        "description": "deleted user"
+                    }
+                }
+            }
+        },
+
+
+        "/showconsults/{email}":{
+            "get": {
+                "summary": "Mostra consultas de usuario especifico",
+                "description": " Esta rota é responsavel por buscar e mostrar uas consultas de um determinado usuario, para saber de qual usuario esta consulta pertece, usamos o EMAIL e realizamos um filtro",
+                "tags": ["Consult"],
+                "parameters": [{
+                    "in": "path",
+                    "name": "email",
+                    "required": true,
+                    "schema":{
+                        "type": "string",
+                        "minimum": 1
+                    }
+                }],
+                "responses": {
+                    "400": {
+                        "description": "user not found"
+                    },
+                    "200":{
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Consult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/updateconsult/{id}":{
+            "post": {
+                "summary": "Edição de Consultas",
+                "description": "  Esta rota é responsavel por editar as informações do usuario, usando o id como referencia de qual usuario editar.  ",
+                "tags": ["Consult"],
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "schema":{
+                        "type": "string",
+                        "minimum": 1
+                    }
+                }],     "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Consult"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value":{
+                                        "specialty": "dermatologista",
+                                        "date": "15/05/2022",
+                                        "email": "JoãoPedroMaia@gmal.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Required fields"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "200":{
+                        "description": "user updated successfully"
+                    }
+                }
+            }
+        },
+
+        "/deleteconsult/{id}":{
+            "delete": {
+                "summary": "Deletar Consulta",
+                "description": " Esta rota é responsavel excluir uma consulta do banco de dados, utilizando o Id vindo por params para deletar a consulta correspondente.",
+                "tags": ["Consult"],
+                "parameters": [{
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "schema":{
+                        "type": "string",
+                        "minimum": 1
+                    }
+                }],
+                "responses": {
+                    "404": {
+                        "description": "consult not found"
+                    },
+                    "200":{
+                        "description": "deleted consult"
+                    }
+                }
+            }
+        }
+
+    },
+    "components":{
+
+
+        "schemas":{
+            "User": {
+                "type": "object",
+                "properties":{
+                    "name":{
+                        "type": "string"
+                    },
+                    "cpf":{
+                        "type": "string"
+                    },
+                    "phone":{
+                        "type": "string"
+                    },
+                    "email":{
+                        "type": "string"
+                    },
+                    "password":{
+                        "type": "string"
+                    }
+                }
+            },
+
+            "Consult": {
+                "type": "object",
+                "properties":{
+                    "specialty":{
+                        "type": "string"
+                    },
+                    "date":{
+                        "type": "string"
+                    },
+                    "email":{
+                        "type": "string"
+                    }
+                }
+            }
+        }
+
+
+    }
 
 }
+
+

@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt")
 module.exports = class userController {
  
     
+
     // metodo de registro de usuario
     static async registerUser(req, res){
     
@@ -19,7 +20,7 @@ module.exports = class userController {
                 return res.status(422).json({message: 'empty cpf field'})
             }
             if(!phone || phone == null || phone == ''){
-                return res.status(422).json({message: 'empty telefone field'})
+                return res.status(422).json({message: 'empty phone field'})
             }
             if(!email || email == null || email == ''){
                 return res.status(422).json({message: 'empty email field'})
@@ -41,10 +42,7 @@ module.exports = class userController {
 
             await user.save();
 
-            const secret = process.env.SECRET
-            const token = jwt.sign({id: user._id,},secret,)
-
-            res.status(200).json({token})
+            res.status(200).json({message: "registered user"})
 
     }
     // metodo de login
@@ -69,7 +67,7 @@ module.exports = class userController {
         //checkando se a senha esta correta e geração de token de autenticação
         const checkPassword = await bcrypt.compare(password, user.password)
         if(!checkPassword){
-            return res.status(422).json({message: 'invalid password'})
+            return res.status(401).json({message: 'invalid password'})
         }
 
         try{
@@ -94,6 +92,9 @@ module.exports = class userController {
     static async showUsers(req, res){
         
         const users = await User.find({raw:true})
+        if(!users || users == null || users == ''){
+            return res.status(400).json({message: "no registered users"})
+        }
         return res.status(200).json(users)
 
     }
@@ -101,6 +102,7 @@ module.exports = class userController {
     static async findOneUser(req, res){
         
         const  id  = req.params.id
+        
         if(!id){
             res.status(404).json({ message: "user not found" });
         }
@@ -145,6 +147,7 @@ module.exports = class userController {
 
     }
 
+    
     
 
 }
