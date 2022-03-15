@@ -10,7 +10,7 @@ class ProgramController {
         const agent = new WebhookClient({ request: req, response: res });
 
         function welcome(agent) {
-            agent.add(`Rodando do Webhook`);
+            agent.add(`Seja bem-vindo(a)! Eu sou a Julia sua assistente virtual. Como posso ajudar?`);
         }
 
         function convertDate(date) {
