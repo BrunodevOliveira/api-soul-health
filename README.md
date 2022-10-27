@@ -1,6 +1,5 @@
 <div align="center">
   <img align="center"  src="./src/assets/logoPrincipalFinal_corte.png" alt="SoulHeath">
-  <p>Cuidando com a Alma</p>
 </div>
 <br>
 <div>
@@ -91,6 +90,16 @@ npm run dev
   <h2>&rArr; Equipe de desenvolvimento &lArr;</h2>
   <br>
   <ul>
+    <!-- Bruno Oliveira -->
+    <li>
+      <img src="https://img.shields.io/badge/dev-Bruno%20Oliveira-blueviolet">
+      <a href="https://github.com/BrunodevOliveira">
+        <img src="https://img.shields.io/badge/GitHub-100000?&logo=github&logoColor=white">
+      </a>
+      <a href="https://www.linkedin.com/in/brunodevoliveira/">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?&logo=linkedin&logoColor=white">
+      </a>
+    </li>
     <!-- Silas Sousa -->
     <li>
       <img src="https://img.shields.io/badge/dev-Silas%20Sousa-blueviolet">
@@ -118,16 +127,6 @@ npm run dev
         <img src="https://img.shields.io/badge/GitHub-100000?&logo=github&logoColor=white">
       </a>
       <a href="https://www.linkedin.com/in/luceliabatista/">
-        <img src="https://img.shields.io/badge/LinkedIn-0077B5?&logo=linkedin&logoColor=white">
-      </a>
-    </li>
-    <!-- Bruno Oliveira -->
-    <li>
-      <img src="https://img.shields.io/badge/dev-Bruno%20Oliveira-blueviolet">
-      <a href="https://github.com/BrunodevOliveira">
-        <img src="https://img.shields.io/badge/GitHub-100000?&logo=github&logoColor=white">
-      </a>
-      <a href="https://www.linkedin.com/in/brunodevoliveira/">
         <img src="https://img.shields.io/badge/LinkedIn-0077B5?&logo=linkedin&logoColor=white">
       </a>
     </li>
